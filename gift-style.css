@@ -1,0 +1,672 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Parisienne&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Caveat', cursive;
+}
+
+/* Starfield Canvas */
+#starCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Main Container */
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Stages */
+.stage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.stage.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Stage 1: "Nhấn Ngay" */
+.stage-1 {
+    cursor: pointer;
+}
+
+.text-press {
+    font-size: clamp(2rem, 8vw, 5rem);
+    font-weight: 700;
+    color: #ff1493;
+    text-shadow: 0 0 20px #ff1493, 0 0 40px #ff1493;
+    letter-spacing: 2px;
+    animation: pulse-glow 1.5s ease-in-out infinite;
+    font-family: 'Caveat', cursive;
+    font-style: italic;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        text-shadow: 0 0 20px #ff1493, 0 0 40px #ff1493;
+    }
+    50% {
+        text-shadow: 0 0 40px #ff1493, 0 0 80px #ff1493, 0 0 100px #ff1493;
+    }
+}
+
+/* Stage 2: "Chạm 2 lần để bắt đầu" */
+.text-tap {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+    color: #ff69b4;
+    text-shadow: 0 0 15px #ff69b4;
+    margin-bottom: 3rem;
+    text-align: center;
+    animation: fade-in 0.5s ease-out;
+}
+
+.glow-circle {
+    width: clamp(100px, 25vw, 200px);
+    height: clamp(100px, 25vw, 200px);
+    border: 3px solid #ff1493;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #ff1493, inset 0 0 30px #ff1493, 0 0 60px #ff1493;
+    animation: pulse-ring 2s ease-in-out infinite;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.glow-circle.holding {
+    animation: none;
+}
+
+.glow-circle.holding .progress-ring {
+    opacity: 1;
+    border: 4px solid transparent;
+    border-top: 4px solid #ff1493;
+    border-right: 4px solid #ff69b4;
+    animation: spin-ring 2s linear forwards;
+}
+
+@keyframes spin-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse-ring {
+    0%, 100% {
+        box-shadow: 0 0 30px #ff1493, inset 0 0 30px #ff1493, 0 0 60px #ff1493;
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 60px #ff1493, inset 0 0 60px #ff1493, 0 0 100px #ff1493;
+        transform: scale(1.1);
+    }
+}
+
+/* Stage 3: "Nhân ngày" */
+.text-happy {
+    font-size: clamp(2rem, 8vw, 6rem);
+    color: #ff1493;
+    text-shadow: 0 0 20px #ff1493, 0 0 40px #ff1493;
+    animation: fade-zoom 1s ease-out;
+    font-weight: 700;
+    font-family: 'Caveat', cursive;
+}
+
+@keyframes fade-zoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Stage 4: "Quốc Tế Thiếu Nhi 1/6" */
+.text-title {
+    font-size: clamp(1.4rem, 5vw, 3.2rem);
+    color: #ff1493;
+    text-shadow: 0 0 25px #ff1493, 0 0 50px #ff1493;
+    text-align: center;
+    line-height: 1.3;
+    font-weight: 700;
+    animation: fade-zoom 1.2s ease-out;
+}
+
+.text-title span {
+    font-size: 1.2em;
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
+/* Stage 5: Upload & 3D Sphere */
+.stage-5 {
+    padding: 2rem;
+}
+
+.upload-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    z-index: 100;
+}
+
+.upload-btn {
+    padding: 1rem 2rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    background: linear-gradient(135deg, #ff1493, #ff69b4);
+    color: white;
+    border: 2px solid #ff1493;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 20px #ff1493;
+    transition: all 0.3s ease;
+    font-family: 'Caveat', cursive;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.upload-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px #ff1493;
+}
+
+.upload-btn:active {
+    transform: scale(0.95);
+}
+
+.upload-hint {
+    color: #ff69b4;
+    margin-top: 0.5rem;
+    font-size: clamp(0.8rem, 3vw, 1rem);
+    text-shadow: 0 0 10px #ff69b4;
+}
+
+.sphere-container {
+    width: 100%;
+    height: 60vh;
+    min-height: 420px;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.tap-to-continue {
+    color: #ff69b4;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    text-align: center;
+    margin-top: 2rem;
+    animation: blink 1s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.loading-text {
+    color: #ff69b4;
+    font-size: clamp(1.2rem, 5vw, 2.5rem);
+    text-shadow: 0 0 15px #ff69b4;
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: blink 1.5s ease-in-out infinite;
+    z-index: 100;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Stage 6: Image Gallery */
+.gallery-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    perspective: 1000px;
+}
+
+.gallery-image {
+    position: absolute;
+    width: clamp(80px, 20vw, 200px);
+    height: clamp(80px, 20vw, 200px);
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #ff1493;
+    cursor: grab;
+    transition: box-shadow 0.3s ease;
+}
+
+.gallery-image:hover {
+    box-shadow: 0 0 40px #ff1493, 0 0 60px #ff69b4;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .text-press {
+        font-size: 2.5rem;
+    }
+
+    .text-tap {
+        font-size: 1.5rem;
+    }
+
+    .text-happy {
+        font-size: 2.5rem;
+    }
+
+    .text-title {
+        font-size: 1.8rem;
+    }
+
+    .glow-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .sphere-container {
+        height: 40vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-press {
+        font-size: 1.8rem;
+    }
+
+    .text-tap {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    .text-happy {
+        font-size: 2rem;
+    }
+
+    .text-title {
+        font-size: 1.3rem;
+    }
+
+    .glow-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .upload-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .gallery-image {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Animation delay utilities */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* Fade in animation */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/* =========================
+   STAGE 7 - LOVE LETTER
+========================= */
+
+.stage-7 {
+    position: absolute;
+    inset: 0;
+    display: none;
+    overflow: hidden;
+}
+
+.stage-7.active {
+    display: block;
+}
+
+/* envelope */
+
+.flying-envelope {
+    position: absolute;
+
+    right: -220px;
+    bottom: -220px;
+
+    width: 140px;
+    height: 95px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    cursor: pointer;
+
+    z-index: 20;
+
+    transition:
+        right 3s ease,
+        bottom 3s ease,
+        transform 3s ease,
+        opacity .35s;
+}
+
+.flying-envelope.fly-in {
+    right: 50%;
+    bottom: 50%;
+
+    transform:
+        translate(50%, 50%);
+}
+
+.envelope-body {
+    position: relative;
+
+    width: 95px;
+    height: 64px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff7fb,
+            #ffddeb
+        );
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 22px rgba(255,20,147,.35);
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 45%;
+
+    background: #ffcfe2;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+}
+
+.heart-seal {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.wing {
+    width: 26px;
+    height: 42px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #ffe4f0
+        );
+
+    border-radius:
+        50% 50% 40% 40%;
+
+    box-shadow:
+        0 0 14px rgba(255,20,147,.3);
+
+    animation:
+        flap .6s ease-in-out infinite;
+}
+
+.left-wing {
+    transform-origin: right center;
+}
+
+.right-wing {
+    transform-origin: left center;
+}
+
+@keyframes flap {
+    0%,100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(18deg);
+    }
+}
+
+/* card */
+
+.hidden {
+    display: none;
+}
+
+.love-card {
+    position: absolute;
+    min-height: auto;
+    max-height: 78vh;
+    overflow-y: auto;
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.85);
+
+    opacity: 0;
+
+   width: 78%;
+    max-width: 620px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff8fb,
+            #ffeef7
+        );
+
+    border-radius: 30px;
+
+    padding: 36px 42px;
+
+    text-align: center;
+
+    box-shadow:
+        0 0 30px rgba(255,130,180,.32);
+
+    color: #a34d7f;
+
+    z-index: 40;
+
+    transition: .6s ease;
+}
+
+.love-card::before {
+    content: "";
+
+    position: absolute;
+    inset: 14px;
+
+    border: 2px dashed #f7b8d3;
+
+    border-radius: 24px;
+
+    pointer-events: none;
+}
+
+.love-card.show {
+    display: block;
+
+    opacity: 1;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.card-bow {
+    position: absolute;
+    top: -8px;
+    right: 18px;
+
+    font-size: 54px;
+}
+
+.card-header {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.love-card h1 {
+    font-size: 54px;
+    color: #ff5fa2;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 26px;
+    color: #b76492;
+    margin-bottom: 24px;
+}
+
+.card-body p {
+    font-size: 26px;
+    line-height: 1.7;
+    margin: 16px 0;
+}
+
+.divider {
+    font-size: 24px;
+    margin: 14px 0;
+}
+
+.footer-text {
+    margin-top: 22px;
+    font-size: 40px;
+    color: #ff4f97;
+}
+
+@media (max-width: 768px) {
+
+    .love-card {
+        padding: 26px;
+    }
+    .love-card {
+        width: 92%;
+        max-height: 75vh;
+    }
+
+    .card-content {
+        padding: 18px;
+    }
+
+    .love-card h1 {
+        font-size: 40px;
+    }
+
+    .subtitle {
+        font-size: 22px;
+    }
+
+    .card-body p {
+        font-size: 22px;
+    }
+
+    .footer-text {
+        font-size: 30px;
+    }
+
+    .flying-envelope {
+        width: 120px;
+        height: 80px;
+    }
+}
+.card-content p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    line-height: 1.9;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.card-content .emoji {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 1;
+}
+.card-content {
+    letter-spacing: 0.4px;
+    padding: 28px;
+}
+
+.card-content p {
+    margin: 18px 0;
+}
