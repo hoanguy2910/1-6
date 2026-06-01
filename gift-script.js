@@ -181,37 +181,37 @@ class StageManager {
             '1 (5).jpg',
             '1 (6).jpg',
             '1 (4).jpg',
-            '1 (1).jpg', '1 (7).jpg', '1 (8).jpg', '1 (9).jpg', '1 (10).jpg', '1 (11).jpg', '1 (12).jpg', '1 (13).jpg', '1 (14).jpg', '1 (15).jpg', '1 (16).jpg', '1 (17).jpg', '1 (18).jpg', '1 (19).jpg', '1 (20).jpg', '1 (21).jpg', '1 (22).jpg', '1 (23).jpg', '1 (24).jpg', '1 (25).jpg', '1 (26).jpg', '1 (27).jpg', '1 (28).jpg', '1 (29).jpg', '1 (30).jpg', '1 (31).jpg', '1 (32).jpg', '1 (33).jpg', '1 (34).jpg', '1 (35).jpg', '1 (36).jpg', '1 (37).jpg', '1 (38).jpg', '1 (39).jpg', '1 (40).jpg'
+            '1 (1).jpg', '1 (7).jpg', '1 (8).jpg', '1 (9).jpg', '1 (10).jpg', '1 (11).jpg', '1 (12).jpg', '1 (13).jpg', '1 (14).jpg', '1 (15).jpg', 
+            '1 (16).jpg', '1 (17).jpg', '1 (18).jpg', '1 (19).jpg', '1 (20).jpg', '1 (21).jpg', '1 (22).jpg', '1 (23).jpg', '1 (24).jpg', '1 (25).jpg', 
+            '1 (26).jpg', '1 (27).jpg', '1 (28).jpg', '1 (29).jpg', '1 (30).jpg', '1 (31).jpg', '1 (32).jpg', '1 (33).jpg', '1 (34).jpg', '1 (35).jpg', 
+            '1 (36).jpg', '1 (37).jpg', '1 (38).jpg', '1 (39).jpg', '1 (40).jpg'
         ];
         // =============================
 
-        let loadedCount = 0;
-        const loadedImages = [];
+const loadedImages = [];
 
-        imageUrls.forEach((url, index) => {
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.imageSmoothingEnabled = false;
-                ctx.drawImage(img, 0, 0);
-                loadedImages.push(canvas.toDataURL());
-                loadedCount++;
+    // hiện quả cầu ngay
+    this.images = [];
+    this.replicateImages([
+        imageUrls[0]
+    ]);
 
-                if (loadedCount === imageUrls.length) {
-                    this.replicateImages(loadedImages);
-                }
-            };
-            img.onerror = () => {
-                loadedCount++;
-                if (loadedCount === imageUrls.length) {
-                    this.replicateImages(loadedImages);
-                }
-            };
-            img.src = url;
-        });
+    imageUrls.forEach((url) => {
+        const img = new Image();
+
+        img.onload = () => {
+            loadedImages.push(url);
+
+            // cập nhật luôn khi có ảnh mới
+            this.images = [...loadedImages];
+
+            if (this.sphere) {
+                this.initializeSphere();
+            }
+        };
+
+        img.src = url;
+    });
     }
 
     replicateImages(baseImages) {
