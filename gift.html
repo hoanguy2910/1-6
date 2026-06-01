@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quà Tặng 1/6 - Ngày Quốc Tế Thiếu Nhi</title>
+    <link rel="stylesheet" href="gift-style.css">
+</head>
+<body>
+    <!-- Starfield Background -->
+    <canvas id="starCanvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Stage 2: "Chạm 2 lần để bắt đầu" -->
+        <div class="stage stage-2 active">
+            <div class="text-tap">Giữ ngón tay iu của bé vào đây</div>
+            <div class="glow-circle">
+                <div class="progress-ring"></div>
+            </div>
+        </div>
+
+        <!-- Stage 3: "Nhân ngày" Fade + Zoom -->
+        <div class="stage stage-3">
+            <div class="text-happy">Nhân ngày</div>
+        </div>
+
+        <!-- Stage 4: "Quốc Tế Thiếu Nhi " -->
+        <div class="stage stage-4">
+            <div class="text-title">Quốc Tế Thiếu Nhi gửi đến bé iu của anh<br><span>1/6</span></div>
+        </div>
+
+        <!-- Stage 5: 3D Sphere with Images -->
+        <div class="stage stage-5">
+            <div id="sphereContainer" class="sphere-container"></div>
+            <div class="tap-to-continue" id="continueBtn" style="display: none;">Click để tiếp tục</div>
+        </div>
+
+        <!-- Stage 6: 3D Image Gallery -->
+        <div class="stage stage-6">
+            <div id="galleryContainer" class="gallery-container"></div>
+        </div>
+        
+        <div class="stage stage-7">
+
+    <!-- Lá thư bay -->
+    <div class="flying-envelope" id="flyingEnvelope">
+        <div class="wing left-wing"></div>
+
+        <div class="envelope-body">
+            <div class="envelope-flap"></div>
+            <div class="heart-seal">💖</div>
+        </div>
+
+        <div class="wing right-wing"></div>
+    </div>
+
+    <!-- Thiệp -->
+    <div class="love-card hidden" id="letterCard">
+
+        <div class="card-bow">🎀</div>
+
+        <div class="card-header">
+            💖 🐰 🌸 ✨ 🧸
+        </div>
+
+        <h1>Nhân Ngày 1/6</h1>
+
+        <div class="subtitle">
+            gửi bé yêu của anh <span class="emoji">💌</span>
+        </div>
+
+        <div class="card-body">
+
+            <p>
+                Bé biết không…
+                từ ngày có em,
+                mọi thứ quanh anh dịu dàng hơn rất nhiều 💗
+            </p>
+
+            <p>
+                Anh thích cảm giác được quan tâm em,
+                nhắc em ăn uống,
+                nghe em kể chuyện mỗi ngày,
+                và được yêu thương em theo cách thật tự nhiên ✨
+            </p>
+
+            <div class="divider">🌸</div>
+
+            <p>
+                Anh chỉ mong bé của anh
+                luôn vui vẻ hơn một chút,
+                được nuông chiều nhiều hơn một chút,
+                và lúc nào cũng cảm nhận được rằng
+                có một người rất thương em ở đây 💖💖💖
+            </p>
+
+            <p>
+                Nếu hôm nào mệt,
+                cứ dựa vào anh nha.
+                Nếu vui,
+                kể anh nghe đầu tiên nha 💖
+            </p>
+
+            <div class="divider">🧸</div>
+
+            <p>
+                Chúc bé iu của anh
+                có một ngày 1/6 thật vui,
+                thật nhiều tiếng cười
+                và luôn thật hạnh phúc ✨
+            </p>
+
+            <div class="footer-text">
+                Yêu và thương bé nhiều lắm 💗
+            </div>
+
+        </div>
+    </div>
+</div>
+    </div>
+
+    <!-- Three.js for 3D Sphere -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Three.js for 3D Sphere -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Custom Script -->
+    <script src="gift-script.js"></script>
+    <audio id="bgMusic" loop>
+    <source
+        src="https://cdn.pixabay.com/download/audio/2023/04/25/audio_9f08f2f8c6.mp3"
+        type="audio/mpeg"
+    >
+</audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const music =
+        document.getElementById("bgMusic");
+
+    music.volume = 0.28;
+
+    const startMusic = () => {
+        music.play().catch(() => {});
+    };
+
+    // click đầu tiên sẽ phát
+    document.addEventListener(
+        "click",
+        startMusic,
+        { once: true }
+    );
+});
+</script>
+    
+</body>
+</html>
+
