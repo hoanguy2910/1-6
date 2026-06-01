@@ -660,3 +660,39 @@ html, body {
 .card-content p {
     margin: 18px 0;
 }
+.loading-note{
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 20px;
+    color: #fff;
+
+    font-weight: 600;
+    letter-spacing: .5px;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.5),
+        0 0 16px rgba(255,20,147,.5);
+
+    animation: pulseText 1.6s infinite;
+    z-index: 10;
+}
+
+@keyframes pulseText{
+    0%{
+        opacity: .5;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50%{
+        opacity: 1;
+        transform: translateX(-50%) scale(1.05);
+    }
+
+    100%{
+        opacity: .5;
+        transform: translateX(-50%) scale(1);
+    }
+}
